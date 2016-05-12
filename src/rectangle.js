@@ -82,6 +82,4 @@ export default class Rectangle {
 		rectI.bottom = Math.min(rect1.bottom, rect2.bottom);
 		return rectI;
 	}
-
-
 }

@@ -3,8 +3,8 @@ module.exports = {
 	output: {
 		libraryTarget: "umd",
 		path: __dirname + "/dist",
-		filename: "timeline.js",
-		library: "Timeline"
+		filename: "geom.js",
+		library: "Geom"
 	},
 	module: {
 	  loaders: [
