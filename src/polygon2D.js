@@ -1,5 +1,6 @@
 import Matrix2D from './matrix2D';
 import Vector2D from './vector2D';
+import Rectangle from './rectangle';
 
 
 export default class Polygon2D {
@@ -55,6 +56,23 @@ export default class Polygon2D {
 			a.push([vector2D.x,vector2D.y]);
 		}
 		return a;
+	}
+
+
+	get bounds() {
+		let minX = 9999999;
+		let minY = 9999999;
+		let maxX = -9999999;
+		let maxY = -9999999;
+		
+		for (let vector2D of this._points) {
+			vector2D = this._transformPoint(vector2D);
+			minX = Math.min(minX, vector2D.x);
+			minY = Math.min(minY, vector2D.y);
+			maxX = Math.min(maxX, vector2D.x);
+			maxY = Math.min(maxY, vector2D.y);
+		}
+		return new Rectangle(minX, minY, maxX, maxY);
 	}
 
 
