@@ -669,8 +669,8 @@ return /******/ (function(modules) { // webpackBootstrap
 						vector2D = this._transformPoint(vector2D);
 						minX = Math.min(minX, vector2D.x);
 						minY = Math.min(minY, vector2D.y);
-						maxX = Math.min(maxX, vector2D.x);
-						maxY = Math.min(maxY, vector2D.y);
+						maxX = Math.max(maxX, vector2D.x);
+						maxY = Math.max(maxY, vector2D.y);
 					}
 				} catch (err) {
 					_didIteratorError3 = true;
