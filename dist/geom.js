@@ -525,6 +525,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _vector2D2 = _interopRequireDefault(_vector2D);
 
+	var _rectangle = __webpack_require__(1);
+
+	var _rectangle2 = _interopRequireDefault(_rectangle);
+
 	var Polygon2D = (function () {
 		function Polygon2D(points) {
 			var _this = this;
@@ -645,6 +649,45 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: '_importArray',
 			value: function _importArray(array) {
 				return new _vector2D2['default'](array[0], array[1]);
+			}
+		}, {
+			key: 'bounds',
+			get: function get() {
+				var minX = 9999999;
+				var minY = 9999999;
+				var maxX = -9999999;
+				var maxY = -9999999;
+
+				var _iteratorNormalCompletion3 = true;
+				var _didIteratorError3 = false;
+				var _iteratorError3 = undefined;
+
+				try {
+					for (var _iterator3 = this._points[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+						var vector2D = _step3.value;
+
+						vector2D = this._transformPoint(vector2D);
+						minX = Math.min(minX, vector2D.x);
+						minY = Math.min(minY, vector2D.y);
+						maxX = Math.min(maxX, vector2D.x);
+						maxY = Math.min(maxY, vector2D.y);
+					}
+				} catch (err) {
+					_didIteratorError3 = true;
+					_iteratorError3 = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+							_iterator3['return']();
+						}
+					} finally {
+						if (_didIteratorError3) {
+							throw _iteratorError3;
+						}
+					}
+				}
+
+				return new _rectangle2['default'](minX, minY, maxX, maxY);
 			}
 		}, {
 			key: 'transform',
