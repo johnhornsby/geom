@@ -1,5 +1,6 @@
 export default class Rectangle {
 
+
 	_scale = 1;
 
 	_left = 0;
@@ -18,6 +19,15 @@ export default class Rectangle {
 		this._height = height || 0;
 	}
 
+
+
+
+
+	/*_______________________________________________________
+
+	Public Methods
+	_________________________________________________________*/
+
 	get left() { return this._left }
 	get top() { return this._top }
 	get x() { return this._left }
@@ -26,6 +36,7 @@ export default class Rectangle {
 	get height() { return this._height }
 	get bottom() { return this._top + this._height }
 	get right() { return this._left + this._width }
+
 
 	set x(value) { this._left = value }
 	set y(value) { this._top = value }
@@ -73,6 +84,15 @@ export default class Rectangle {
 		this._width *= scale;
 		this._height *= scale;
 	}
+
+
+
+
+
+	/*_______________________________________________________
+
+	Static Methods
+	_________________________________________________________*/
 
 	static intersect(rect1, rect2) {
 		const rectI = new Rectangle();

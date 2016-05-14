@@ -108,6 +108,10 @@ return /******/ (function(modules) { // webpackBootstrap
 			this._height = height || 0;
 		}
 
+		/*_______________________________________________________
+	 	Public Methods
+	 _________________________________________________________*/
+
 		_createClass(Rectangle, [{
 			key: "contains",
 			value: function contains(x, y) {
@@ -147,6 +151,11 @@ return /******/ (function(modules) { // webpackBootstrap
 				this._width *= scale;
 				this._height *= scale;
 			}
+
+			/*_______________________________________________________
+	  	Static Methods
+	  _________________________________________________________*/
+
 		}, {
 			key: "left",
 			get: function get() {
@@ -231,17 +240,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 		value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _vector2D = __webpack_require__(3);
+
+	var _vector2D2 = _interopRequireDefault(_vector2D);
 
 	var Matrix2D = (function () {
 		function Matrix2D() {
@@ -257,8 +272,12 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.setValues(a, b, c, d, tx, ty);
 		}
 
+		/*_______________________________________________________
+	 	Public Methods
+	 _________________________________________________________*/
+
 		_createClass(Matrix2D, [{
-			key: "setValues",
+			key: 'setValues',
 			value: function setValues(a, b, c, d, tx, ty) {
 				this._a = a;
 				this._b = b;
@@ -268,7 +287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				this._ty = ty;
 			}
 		}, {
-			key: "translate",
+			key: 'translate',
 			value: function translate(tx, ty) {
 				var I = Matrix2D.identity();
 				I.tx = tx;
@@ -278,7 +297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				Matrix2D.copy(this, m);
 			}
 		}, {
-			key: "scale",
+			key: 'scale',
 			value: function scale(sx, sy) {
 				var I = Matrix2D.identity();
 				I.a = sx;
@@ -288,7 +307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				Matrix2D.copy(this, m);
 			}
 		}, {
-			key: "rotate",
+			key: 'rotate',
 			value: function rotate(theta) {
 				var rads = theta * (Math.PI / 180);
 				var cos = Math.cos(rads);
@@ -303,13 +322,26 @@ return /******/ (function(modules) { // webpackBootstrap
 				Matrix2D.copy(this, m);
 			}
 		}, {
-			key: "multiply",
+			key: 'multiply',
 			value: function multiply(m2) {
 				var m = Matrix2D.multiply(this, m2);
 				Matrix2D.copy(this, m);
 			}
 		}, {
-			key: "a",
+			key: 'transformPoint',
+			value: function transformPoint(vector2D) {
+				var v = new _vector2D2['default']();
+				v.x = vector2D.x * this.a + vector2D.y * this.c + this.tx;
+				v.y = vector2D.x * this.b + vector2D.y * this.d + this.ty;
+				return v;
+			}
+
+			/*_______________________________________________________
+	  	Static Methods
+	  _________________________________________________________*/
+
+		}, {
+			key: 'a',
 			set: function set(a) {
 				this._a = a;
 			},
@@ -317,7 +349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this._a;
 			}
 		}, {
-			key: "b",
+			key: 'b',
 			set: function set(b) {
 				this._b = b;
 			},
@@ -325,7 +357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this._b;
 			}
 		}, {
-			key: "c",
+			key: 'c',
 			set: function set(c) {
 				this._c = c;
 			},
@@ -333,7 +365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this._c;
 			}
 		}, {
-			key: "d",
+			key: 'd',
 			set: function set(d) {
 				this._d = d;
 			},
@@ -341,7 +373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this._d;
 			}
 		}, {
-			key: "tx",
+			key: 'tx',
 			set: function set(tx) {
 				this._tx = tx;
 			},
@@ -349,7 +381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this._tx;
 			}
 		}, {
-			key: "ty",
+			key: 'ty',
 			set: function set(ty) {
 				this._ty = ty;
 			},
@@ -357,7 +389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				return this._ty;
 			}
 		}], [{
-			key: "multiply",
+			key: 'multiply',
 			value: function multiply(m1, m2) {
 				var m3 = Matrix2D.identity();
 				m3.a = m1.a * m2.a + m1.c * m2.b + m1.tx * 0;
@@ -372,12 +404,12 @@ return /******/ (function(modules) { // webpackBootstrap
 				return m3;
 			}
 		}, {
-			key: "copy",
+			key: 'copy',
 			value: function copy(m1, m2) {
 				m1.setValues(m2.a, m2.b, m2.c, m2.d, m2.tx, m2.ty);
 			}
 		}, {
-			key: "identity",
+			key: 'identity',
 			value: function identity() {
 				return new Matrix2D();
 			}
@@ -386,8 +418,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		return Matrix2D;
 	})();
 
-	exports["default"] = Matrix2D;
-	module.exports = exports["default"];
+	exports['default'] = Matrix2D;
+	module.exports = exports['default'];
 
 /***/ },
 /* 3 */
@@ -407,26 +439,38 @@ return /******/ (function(modules) { // webpackBootstrap
 		function Vector2D(x, y) {
 			_classCallCheck(this, Vector2D);
 
+			this._x = 0;
+			this._y = 0;
+
 			this._x = x || 0;
 			this._y = y || 0;
 		}
 
+		/*_______________________________________________________
+	 	Public Methods
+	 _________________________________________________________*/
+
 		_createClass(Vector2D, [{
 			key: "x",
-			set: function set(vx) {
-				this._x = vx;
+			set: function set(x) {
+				this._x = x;
 			},
 			get: function get() {
 				return this._x;
 			}
 		}, {
 			key: "y",
-			set: function set(vy) {
-				this._y = vy;
+			set: function set(y) {
+				this._y = y;
 			},
 			get: function get() {
 				return this._y;
 			}
+
+			/*_______________________________________________________
+	  	Static Methods
+	  _________________________________________________________*/
+
 		}], [{
 			key: "distance",
 			value: function distance(v1, v2) {
@@ -438,10 +482,10 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}, {
 			key: "interpolate",
-			value: function interpolate(v1, v2, l) {
+			value: function interpolate(v1, v2, f) {
 				var v3 = {};
-				v3.x = v1.x + (v2.x - v1.x) * l;
-				v3.y = v1.y + (v2.y - v1.y) * l;
+				v3.x = v1.x + (v2.x - v1.x) * f;
+				v3.y = v1.y + (v2.y - v1.y) * f;
 				return v3;
 			}
 		}]);

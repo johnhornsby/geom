@@ -1,9 +1,23 @@
+import Vector2D from './vector2D';
+
+
 export default class Matrix2D {
+
 
 	constructor(a = 1, b = 0, c = 0, d = 1, tx = 0, ty = 0) {
 		this.setValues(a, b, c, d, tx, ty);
 	}
 	
+
+
+
+
+
+	/*_______________________________________________________
+
+	Public Methods
+	_________________________________________________________*/
+
 	setValues(a, b, c, d, tx, ty) {
 		this._a = a;
 		this._b = b;
@@ -13,6 +27,7 @@ export default class Matrix2D {
 		this._ty = ty;
 	}
 	
+
 	set a(a) { this._a = a }
 	set b(b) { this._b = b }
 	set c(c) { this._c = c }
@@ -20,6 +35,7 @@ export default class Matrix2D {
 	set tx(tx) { this._tx = tx }
 	set ty(ty) { this._ty = ty }
 	
+
 	get a() { return this._a }
 	get b() { return this._b }
 	get c() { return this._c }
@@ -27,6 +43,7 @@ export default class Matrix2D {
 	get tx() { return this._tx }
 	get ty() { return this._ty }
 	
+
 	translate(tx, ty) {
 		const I = Matrix2D.identity();
 		I.tx = tx;
@@ -36,6 +53,7 @@ export default class Matrix2D {
 		Matrix2D.copy(this, m);
 	}
 	
+
 	scale(sx, sy) {
 		const I = Matrix2D.identity();
 		I.a = sx;
@@ -45,6 +63,7 @@ export default class Matrix2D {
 		Matrix2D.copy(this, m);
 	}
 	
+
 	rotate(theta) {
 		const rads = theta * (Math.PI / 180);
 		const cos = Math.cos(rads);
@@ -59,11 +78,30 @@ export default class Matrix2D {
 		Matrix2D.copy(this, m);
 	}
 	
+
 	multiply(m2) {
 		const m = Matrix2D.multiply(this, m2);
 		Matrix2D.copy(this, m);
 	}
-	
+
+
+	transformPoint(vector2D) {
+		const v = new Vector2D;
+		v.x = vector2D.x * this.a + vector2D.y * this.c + this.tx;
+		v.y = vector2D.x * this.b + vector2D.y * this.d + this.ty;
+		return v;
+	}
+
+
+
+
+
+
+	/*_______________________________________________________
+
+	Static Methods
+	_________________________________________________________*/
+
 	static multiply(m1, m2) {
 		const m3 = Matrix2D.identity();
 		m3.a = m1.a * m2.a + m1.c * m2.b + m1.tx * 0;
@@ -78,6 +116,7 @@ export default class Matrix2D {
 		return m3;
 	}
 	
+
 	static copy(m1, m2) {
 		m1.setValues(m2.a, m2.b, m2.c, m2.d, m2.tx, m2.ty);
 	}
