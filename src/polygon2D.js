@@ -136,6 +136,6 @@ export default class Polygon2D {
 			return;
 		}
 
-		return new Polygon2DExtra(a);
+		return new Polygon2D(a);
 	}
 }

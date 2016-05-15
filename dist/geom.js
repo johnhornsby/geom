@@ -726,7 +726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					return;
 				}
 
-				return new Polygon2DExtra(a);
+				return new Polygon2D(a);
 			}
 		}]);
 
