@@ -35,6 +35,9 @@ export default class Polygon2D {
 	Public Methods
 	_________________________________________________________*/
 
+	get length() { return this._points.length }
+
+
 	get bounds() {
 		let minX = 9999999;
 		let minY = 9999999;
@@ -100,5 +103,39 @@ export default class Polygon2D {
 
 	_importArray(array) {
 		return new Vector2D(array[0], array[1]);
+	}
+
+
+
+
+
+	
+	/*_______________________________________________________
+
+	Static Methods
+	_________________________________________________________*/
+
+	static interpolate(p1, p2, f) {
+		const a = [];
+		const l = p1.length;
+		let x, y, d = l;
+
+		if (p1.length === p2.length) {
+
+			p1 = p1.toArray();
+			p2 = p2.toArray();
+
+			while(d--) {
+				a.unshift([
+					[p1[d][0] + ((p2[d][0] - p1[d][0]) * f)],
+					[p1[d][1] + ((p2[d][1] - p1[d][1]) * f)]
+				]);
+			}
+		} else {
+			throw Error("Can't interpolate Polygons as there are not the same length!");
+			return;
+		}
+
+		return new Polygon2DExtra(a);
 	}
 }
