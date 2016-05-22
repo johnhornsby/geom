@@ -47,9 +47,14 @@ export default class Vector2D {
 	
 
 	static interpolate(v1, v2, f) {
-		const v3 = {};
+		const v3 = new Vector2D;
 		v3.x = v1.x + ((v2.x - v1.x) * f);
 		v3.y = v1.y + ((v2.y - v1.y) * f);
 		return v3;
+	}
+
+
+	static angleBetweenVectors(hV, aV) {
+		return (hV.x * aV.x + hV.y * aV.y) / ((Math.sqrt(Math.pow(hV.x, 2) + Math.pow(hV.y, 2))) * (Math.sqrt(Math.pow(aV.x, 2) + Math.pow(aV.y, 2))));
 	}
 }

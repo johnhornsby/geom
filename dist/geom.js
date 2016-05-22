@@ -56,11 +56,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	exports.Polygon2D = exports.Vector2D = exports.Matrix2D = exports.Rectangle = undefined;
 
 	var _rectangle = __webpack_require__(1);
 
@@ -78,10 +77,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _polygon2D2 = _interopRequireDefault(_polygon2D);
 
-	exports.Rectangle = _rectangle2['default'];
-	exports.Matrix2D = _matrix2D2['default'];
-	exports.Vector2D = _vector2D2['default'];
-	exports.Polygon2D = _polygon2D2['default'];
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.Rectangle = _rectangle2.default;
+	exports.Matrix2D = _matrix2D2.default;
+	exports.Vector2D = _vector2D2.default;
+	exports.Polygon2D = _polygon2D2.default;
 
 /***/ },
 /* 1 */
@@ -93,11 +94,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Rectangle = (function () {
+	var Rectangle = function () {
 		function Rectangle(left, top, width, height) {
 			_classCallCheck(this, Rectangle);
 
@@ -238,10 +239,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}]);
 
 		return Rectangle;
-	})();
+	}();
 
-	exports["default"] = Rectangle;
-	module.exports = exports["default"];
+	exports.default = Rectangle;
 
 /***/ },
 /* 2 */
@@ -249,21 +249,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _vector2D = __webpack_require__(3);
 
 	var _vector2D2 = _interopRequireDefault(_vector2D);
 
-	var Matrix2D = (function () {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Matrix2D = function () {
 		function Matrix2D() {
 			var a = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
 			var b = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
@@ -355,7 +355,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'transformPoint',
 			value: function transformPoint(vector2D) {
-				var v = new _vector2D2['default']();
+				var v = new _vector2D2.default();
 				v.x = vector2D.x * this.a + vector2D.y * this.c + this.tx;
 				v.y = vector2D.x * this.b + vector2D.y * this.d + this.ty;
 				return v;
@@ -445,10 +445,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}]);
 
 		return Matrix2D;
-	})();
+	}();
 
-	exports['default'] = Matrix2D;
-	module.exports = exports['default'];
+	exports.default = Matrix2D;
 
 /***/ },
 /* 3 */
@@ -460,11 +459,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Vector2D = (function () {
+	var Vector2D = function () {
 		function Vector2D(x, y) {
 			_classCallCheck(this, Vector2D);
 
@@ -512,18 +511,22 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "interpolate",
 			value: function interpolate(v1, v2, f) {
-				var v3 = {};
+				var v3 = new Vector2D();
 				v3.x = v1.x + (v2.x - v1.x) * f;
 				v3.y = v1.y + (v2.y - v1.y) * f;
 				return v3;
 			}
+		}, {
+			key: "angleBetweenVectors",
+			value: function angleBetweenVectors(hV, aV) {
+				return (hV.x * aV.x + hV.y * aV.y) / (Math.sqrt(Math.pow(hV.x, 2) + Math.pow(hV.y, 2)) * Math.sqrt(Math.pow(aV.x, 2) + Math.pow(aV.y, 2)));
+			}
 		}]);
 
 		return Vector2D;
-	})();
+	}();
 
-	exports["default"] = Vector2D;
-	module.exports = exports["default"];
+	exports.default = Vector2D;
 
 /***/ },
 /* 4 */
@@ -531,15 +534,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _matrix2D = __webpack_require__(2);
 
@@ -553,7 +552,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _rectangle2 = _interopRequireDefault(_rectangle);
 
-	var Polygon2D = (function () {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Polygon2D = function () {
 		function Polygon2D(points) {
 			var _this = this;
 
@@ -563,9 +566,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			this._transform = null;
 			this._worldTransform = null;
 
-			var p = undefined,
-			    x = undefined,
-			    y = undefined;
+			var p = void 0,
+			    x = void 0,
+			    y = void 0;
 			this._points = [];
 
 			this._transform = new _matrix2D2['default']();
@@ -616,8 +619,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					_iteratorError = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion && _iterator['return']) {
-							_iterator['return']();
+						if (!_iteratorNormalCompletion && _iterator.return) {
+							_iterator.return();
 						}
 					} finally {
 						if (_didIteratorError) {
@@ -656,8 +659,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					_iteratorError2 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-							_iterator2['return']();
+						if (!_iteratorNormalCompletion2 && _iterator2.return) {
+							_iterator2.return();
 						}
 					} finally {
 						if (_didIteratorError2) {
@@ -676,7 +679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: '_transformPoint',
 			value: function _transformPoint(vector2D) {
-				var v = new _vector2D2['default']();
+				var v = new _vector2D2.default();
 				v.x = vector2D.x * this._transform.a + vector2D.y * this._transform.c + this._transform.tx;
 				v.y = vector2D.x * this._transform.b + vector2D.y * this._transform.d + this._transform.ty;
 				return v;
@@ -685,12 +688,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: '_importString',
 			value: function _importString(str) {
 				var p = str.split(',');
+
 				return new _vector2D2['default'](parseFloat(p[0]), parseFloat(p[1]));
 			}
 		}, {
 			key: '_importArray',
 			value: function _importArray(array) {
-				return new _vector2D2['default'](array[0], array[1]);
+				return new _vector2D2.default(array[0], array[1]);
 			}
 
 			/*_______________________________________________________
@@ -758,8 +762,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					_iteratorError3 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-							_iterator3['return']();
+						if (!_iteratorNormalCompletion3 && _iterator3.return) {
+							_iterator3.return();
 						}
 					} finally {
 						if (_didIteratorError3) {
@@ -768,15 +772,15 @@ return /******/ (function(modules) { // webpackBootstrap
 					}
 				}
 
-				return new _rectangle2['default'](minX, minY, maxX, maxY);
+				return new _rectangle2.default(minX, minY, maxX, maxY);
 			}
 		}], [{
 			key: 'interpolate',
 			value: function interpolate(p1, p2, f) {
 				var a = [];
 				var l = p1.length;
-				var x = undefined,
-				    y = undefined,
+				var x = void 0,
+				    y = void 0,
 				    d = l;
 
 				if (p1.length === p2.length) {
@@ -797,10 +801,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		}]);
 
 		return Polygon2D;
-	})();
+	}();
 
-	exports['default'] = Polygon2D;
-	module.exports = exports['default'];
+	exports.default = Polygon2D;
 
 /***/ }
 /******/ ])
