@@ -326,11 +326,31 @@ return /******/ (function(modules) { // webpackBootstrap
 				var m = Matrix2D.multiply(this, I);
 				Matrix2D.copy(this, m);
 			}
+
+			/**
+	   * Prepends matrix to our matrix
+	   *
+	   */
 		}, {
 			key: 'multiply',
-			value: function multiply(m2) {
-				var m = Matrix2D.multiply(this, m2);
-				Matrix2D.copy(this, m);
+			value: function multiply(m) {
+				var a = this.a;
+				var b = this.b;
+				var c = this.c;
+				var d = this.d;
+				var tx = this.tx;
+				var ty = this.ty;
+
+				this.a = m.a * a + m.c * b;
+				this.b = m.b * a + m.d * b;
+
+				this.c = m.a * c + m.c * d;
+				this.d = m.b * c + m.d * d;
+
+				this.tx = m.a * tx + m.c * ty + m.tx;
+				this.ty = m.b * tx + m.d * ty + m.ty;
+
+				return this;
 			}
 		}, {
 			key: 'transformPoint',
@@ -345,6 +365,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  	Static Methods
 	  _________________________________________________________*/
 
+			/**
+	   * Applies matrix2 to matrix1
+	   *
+	   */
 		}, {
 			key: 'a',
 			set: function set(a) {
@@ -395,17 +419,17 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}], [{
 			key: 'multiply',
-			value: function multiply(m1, m2) {
+			value: function multiply(matrix1, matrix2) {
 				var m3 = Matrix2D.identity();
-				m3.a = m1.a * m2.a + m1.c * m2.b + m1.tx * 0;
-				m3.b = m1.b * m2.a + m1.d * m2.b + m1.ty * 0;
-				//0 = 0 * m2.a + 0 * m2.b + 1 * 0;
-				m3.c = m1.a * m2.c + m1.c * m2.d + m1.tx * 0;
-				m3.d = m1.b * m2.c + m1.d * m2.d + m1.ty * 0;
-				//0 = 0 * m2.c + 0 * m2.d + 1 * 0;
-				m3.tx = m1.a * m2.tx + m1.c * m2.ty + m1.tx * 1;
-				m3.ty = m1.b * m2.tx + m1.d * m2.ty + m1.ty * 1;
-				// 1 = 0 * m2.tx + 0 * m2.ty + 1 * 1
+				m3.a = matrix2.a * matrix1.a + matrix2.c * matrix1.b + matrix2.tx * 0;
+				m3.b = matrix2.b * matrix1.a + matrix2.d * matrix1.b + matrix2.ty * 0;
+				//0 = 0 * matrix1.a + 0 * matrix1.b + 1 * 0;
+				m3.c = matrix2.a * matrix1.c + matrix2.c * matrix1.d + matrix2.tx * 0;
+				m3.d = matrix2.b * matrix1.c + matrix2.d * matrix1.d + matrix2.ty * 0;
+				//0 = 0 * matrix1.c + 0 * matrix1.d + 1 * 0;
+				m3.tx = matrix2.a * matrix1.tx + matrix2.c * matrix1.ty + matrix2.tx * 1;
+				m3.ty = matrix2.b * matrix1.tx + matrix2.d * matrix1.ty + matrix2.ty * 1;
+				// 1 = 0 * matrix1.tx + 0 * matrix1.ty + 1 * 1
 				return m3;
 			}
 		}, {
@@ -537,6 +561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 			this._points = null;
 			this._transform = null;
+			this._worldTransform = null;
 
 			var p = undefined,
 			    x = undefined,
@@ -544,6 +569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			this._points = [];
 
 			this._transform = new _matrix2D2['default']();
+			this._worldTransform = new _matrix2D2['default']();
 
 			if (points.constructor === String) {
 				this._points = points.split(' ').map(function (str) {
@@ -563,9 +589,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 _________________________________________________________*/
 
 		_createClass(Polygon2D, [{
-			key: 'toString',
-			value: function toString() {
-				var str = "";
+			key: 'toArray',
+			value: function toArray(worldMatrix2D) {
+				var x = undefined,
+				    y = undefined,
+				    a = [];
+
+				worldMatrix2D = worldMatrix2D || this._worldTransform;
+				var collapsedTransform = _matrix2D2['default'].multiply(this._transform, worldMatrix2D);
+
 				var _iteratorNormalCompletion = true;
 				var _didIteratorError = false;
 				var _iteratorError = undefined;
@@ -574,8 +606,10 @@ return /******/ (function(modules) { // webpackBootstrap
 					for (var _iterator = this._points[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 						var vector2D = _step.value;
 
-						vector2D = this._transformPoint(vector2D);
-						str += vector2D.x + ',' + vector2D.y + ' ';
+						x = vector2D.x * collapsedTransform.a + vector2D.y * collapsedTransform.c + collapsedTransform.tx;
+						y = vector2D.x * collapsedTransform.b + vector2D.y * collapsedTransform.d + collapsedTransform.ty;
+
+						a.push([x, y]);
 					}
 				} catch (err) {
 					_didIteratorError = true;
@@ -592,12 +626,18 @@ return /******/ (function(modules) { // webpackBootstrap
 					}
 				}
 
-				return str.slice(0, -1);
+				return a;
 			}
 		}, {
-			key: 'toArray',
-			value: function toArray() {
-				var a = [];
+			key: 'toString',
+			value: function toString(worldMatrix2D) {
+				var x = undefined,
+				    y = undefined,
+				    str = "";
+
+				worldMatrix2D = worldMatrix2D || this._worldTransform;
+				var collapsedTransform = _matrix2D2['default'].multiply(this._transform, worldMatrix2D);
+
 				var _iteratorNormalCompletion2 = true;
 				var _didIteratorError2 = false;
 				var _iteratorError2 = undefined;
@@ -606,8 +646,10 @@ return /******/ (function(modules) { // webpackBootstrap
 					for (var _iterator2 = this._points[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 						var vector2D = _step2.value;
 
-						vector2D = this._transformPoint(vector2D);
-						a.push([vector2D.x, vector2D.y]);
+						x = vector2D.x * collapsedTransform.a + vector2D.y * collapsedTransform.c + collapsedTransform.tx;
+						y = vector2D.x * collapsedTransform.b + vector2D.y * collapsedTransform.d + collapsedTransform.ty;
+
+						str += x + ',' + y + ' ';
 					}
 				} catch (err) {
 					_didIteratorError2 = true;
@@ -624,7 +666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					}
 				}
 
-				return a;
+				return str.slice(0, -1);
 			}
 
 			/*_______________________________________________________
@@ -643,7 +685,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: '_importString',
 			value: function _importString(str) {
 				var p = str.split(',');
-				return new _vector2D2['default'](parseInt(p[0]), parseInt(p[1]));
+				return new _vector2D2['default'](parseFloat(p[0]), parseFloat(p[1]));
 			}
 		}, {
 			key: '_importArray',
@@ -659,6 +701,35 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'length',
 			get: function get() {
 				return this._points.length;
+			}
+		}, {
+			key: 'x',
+			get: function get() {
+				return this._worldTransform.tx;
+			},
+			set: function set(x) {
+				this._worldTransform.tx = x;
+			}
+		}, {
+			key: 'y',
+			get: function get() {
+				return this._worldTransform.ty;
+			},
+			set: function set(y) {
+				this._worldTransform.ty = y;
+			}
+		}, {
+			key: 'transform',
+			get: function get() {
+				return this._transform;
+			},
+			set: function set(m) {
+				this._transform = m;
+			}
+		}, {
+			key: 'worldTransform',
+			get: function get() {
+				return this._worldTransform;
 			}
 		}, {
 			key: 'bounds',
@@ -698,11 +769,6 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 
 				return new _rectangle2['default'](minX, minY, maxX, maxY);
-			}
-		}, {
-			key: 'transform',
-			set: function set(matrix2D) {
-				this._transform = matrix2D;
 			}
 		}], [{
 			key: 'interpolate',

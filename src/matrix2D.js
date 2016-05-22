@@ -78,10 +78,29 @@ export default class Matrix2D {
 		Matrix2D.copy(this, m);
 	}
 	
+	
+	/**
+	 * Prepends matrix to our matrix
+	 *
+	 */
+	multiply(m) {
+		let a = this.a;
+		let b = this.b;
+		let c = this.c;
+		let d = this.d;
+		let tx = this.tx;
+		let ty = this.ty;
 
-	multiply(m2) {
-		const m = Matrix2D.multiply(this, m2);
-		Matrix2D.copy(this, m);
+		this.a = m.a * a + m.c * b;
+		this.b = m.b * a + m.d * b;
+
+		this.c = m.a * c + m.c * d;
+		this.d = m.b * c + m.d * d;
+
+		this.tx = m.a * tx + m.c * ty + m.tx;
+		this.ty = m.b * tx + m.d * ty + m.ty;
+
+		return this;
 	}
 
 
@@ -102,17 +121,21 @@ export default class Matrix2D {
 	Static Methods
 	_________________________________________________________*/
 
-	static multiply(m1, m2) {
+	/**
+	 * Applies matrix2 to matrix1
+	 *
+	 */
+	static multiply(matrix1, matrix2) {
 		const m3 = Matrix2D.identity();
-		m3.a = m1.a * m2.a + m1.c * m2.b + m1.tx * 0;
-		m3.b = m1.b * m2.a + m1.d * m2.b + m1.ty * 0;
-		//0 = 0 * m2.a + 0 * m2.b + 1 * 0;
-		m3.c = m1.a * m2.c + m1.c * m2.d + m1.tx * 0;
-		m3.d = m1.b * m2.c + m1.d * m2.d + m1.ty * 0;
-		//0 = 0 * m2.c + 0 * m2.d + 1 * 0;
-		m3.tx = m1.a * m2.tx + m1.c * m2.ty + m1.tx * 1;
-		m3.ty = m1.b * m2.tx + m1.d * m2.ty + m1.ty * 1;
-		// 1 = 0 * m2.tx + 0 * m2.ty + 1 * 1
+		m3.a = matrix2.a * matrix1.a + matrix2.c * matrix1.b + matrix2.tx * 0;
+		m3.b = matrix2.b * matrix1.a + matrix2.d * matrix1.b + matrix2.ty * 0;
+		//0 = 0 * matrix1.a + 0 * matrix1.b + 1 * 0;
+		m3.c = matrix2.a * matrix1.c + matrix2.c * matrix1.d + matrix2.tx * 0;
+		m3.d = matrix2.b * matrix1.c + matrix2.d * matrix1.d + matrix2.ty * 0;
+		//0 = 0 * matrix1.c + 0 * matrix1.d + 1 * 0;
+		m3.tx = matrix2.a * matrix1.tx + matrix2.c * matrix1.ty + matrix2.tx * 1;
+		m3.ty = matrix2.b * matrix1.tx + matrix2.d * matrix1.ty + matrix2.ty * 1;
+		// 1 = 0 * matrix1.tx + 0 * matrix1.ty + 1 * 1
 		return m3;
 	}
 	

@@ -10,12 +10,15 @@ export default class Polygon2D {
 
 	_transform = null;
 
+	_worldTransform = null;
+
 
 	constructor(points) {
 		let p, x, y;
 		this._points = [];
 
 		this._transform = new Matrix2D();
+		this._worldTransform = new Matrix2D();
 
 		if (points.constructor === String) {
 			this._points = points.split(' ').map((str) => this._importString(str))
@@ -38,6 +41,21 @@ export default class Polygon2D {
 	get length() { return this._points.length }
 
 
+	get x() { return this._worldTransform.tx }
+	set x(x) { this._worldTransform.tx = x }
+
+
+	get y() { return this._worldTransform.ty }
+	set y(y) { this._worldTransform.ty = y }
+
+
+	get transform() { return this._transform }
+	set transform(m) { this._transform = m }
+
+
+	get worldTransform() { return this._worldTransform }
+
+
 	get bounds() {
 		let minX = 9999999;
 		let minY = 9999999;
@@ -55,28 +73,37 @@ export default class Polygon2D {
 	}
 
 
-	set transform(matrix2D) {
-		this._transform = matrix2D;
-	}
+	toArray(worldMatrix2D) {
+		let x, y, a = [];
 
+		worldMatrix2D = worldMatrix2D || this._worldTransform;
+		const collapsedTransform = Matrix2D.multiply(this._transform, worldMatrix2D);
 
-	toString() {
-		let str = "";
 		for (let vector2D of this._points) {
-			vector2D = this._transformPoint(vector2D);
-			str += `${vector2D.x},${vector2D.y} `
-		}
-		return str.slice(0, - 1);
-	}
 
+			x = vector2D.x * collapsedTransform.a + vector2D.y * collapsedTransform.c + collapsedTransform.tx;
+			y = vector2D.x * collapsedTransform.b + vector2D.y * collapsedTransform.d + collapsedTransform.ty;
 
-	toArray() {
-		let a = [];
-		for (let vector2D of this._points) {
-			vector2D = this._transformPoint(vector2D);
-			a.push([vector2D.x,vector2D.y]);
+			a.push([x, y]);
 		}
 		return a;
+	}
+
+
+	toString(worldMatrix2D) {
+		let x, y, str = "";
+
+		worldMatrix2D = worldMatrix2D || this._worldTransform;
+		const collapsedTransform = Matrix2D.multiply(this._transform, worldMatrix2D);
+
+		for (let vector2D of this._points) {
+
+			x = vector2D.x * collapsedTransform.a + vector2D.y * collapsedTransform.c + collapsedTransform.tx;
+			y = vector2D.x * collapsedTransform.b + vector2D.y * collapsedTransform.d + collapsedTransform.ty;
+
+			str += `${x},${y} `
+		}
+		return str.slice(0, - 1);
 	}
 
 
@@ -97,7 +124,7 @@ export default class Polygon2D {
 
 	_importString(str) {
 		const p = str.split(',')
-		return new Vector2D(parseInt(p[0]), parseInt(p[1]));
+		return new Vector2D(parseFloat(p[0]), parseFloat(p[1]));
 	}
 
 
